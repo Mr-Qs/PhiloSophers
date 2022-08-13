@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:09:49 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/02 01:17:38 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/13 17:56:58 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ typedef	struct s_philo
 	long			last_meal;
 	pthread_t	t;
 	t_data		*data;
+	int			eating;
 }	t_philo;
 #endif
