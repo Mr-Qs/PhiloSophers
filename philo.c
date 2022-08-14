@@ -3,68 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucifer <lucifer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/13 21:08:50 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/14 04:18:31 by lucifer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_print(char *str, int id, long t, t_philo *philo);
-long	get_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return(time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int	shinigami(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->data->num_of_philos)
-	{
-		if (get_time() - philo[i].last_meal > philo->data->time_to_die)
-		{
-			ft_print("is dead", philo[i].id, philo[i].data->time, &philo[i]);
-			pthread_mutex_lock(&philo->data->lck);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-void	mutex_init(t_data *data, int num_of_philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_of_philo)
-		pthread_mutex_init(&data->forks[i++], NULL);
-	pthread_mutex_init(&data->lck, NULL);
-	pthread_mutex_init(&data->meal, NULL);
-}
-
-void	ft_usleep(long time)
-{
-	long t;
-
-	t = get_time();
-	while(get_time() - t < time)
-		usleep(100);
-}
-
-void	ft_print(char *str, int id, long t, t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->lck);
-	printf("%ld ms %d %s\n", get_time() - t, id, str);
-	pthread_mutex_unlock(&philo->data->lck);
-}
 
 void	ft_eating(t_philo *philo, long t)
 {
@@ -73,8 +19,8 @@ void	ft_eating(t_philo *philo, long t)
 	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
 	ft_print("has take a fork", philo->id, t, philo);
 	ft_print("is eating", philo->id, t, philo);
-	ft_usleep(philo->data->time_to_eat);
 	philo->last_meal = get_time();
+	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_lock(&philo->data->meal);
 	philo->meals++;
 	pthread_mutex_unlock(&philo->data->meal);
@@ -114,8 +60,12 @@ int num_of_ats(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->data->meal);
 		if (philo[i].meals < philo->data->num_of_eats)
-			 return (0);
-		pthread_mutex_unlock(&philo->data->meal);
+		{
+			pthread_mutex_unlock(&philo->data->meal);
+			return (0);	
+		}
+			pthread_mutex_unlock(&philo->data->meal);
+
 		i++;
 	}
 	return (1);
@@ -161,12 +111,9 @@ int main(int ac, char **av)
 		return (0);
 	data_init(ac, av, philo);
 	while (1)
-	{
-			printf("OK\n");
-
+	{	
 		if (num_of_ats(philo))
 			return (0);
-			printf("OK\n");
 		if (shinigami(philo))
 			return (0);
 	}

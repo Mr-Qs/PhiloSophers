@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucifer <lucifer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:09:49 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/13 17:56:58 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/14 04:17:32 by lucifer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ typedef	struct s_philo
 	t_data		*data;
 	int			eating;
 }	t_philo;
+
+long	get_time(void);
+int	shinigami(t_philo *philo);
+void	ft_usleep(long time);
+void	mutex_init(t_data *data, int num_of_philo);
+void	ft_print(char *str, int id, long t, t_philo *philo);
+void	ft_eating(t_philo *philo, long t);
+void	ft_sleeping(t_philo *philo, long t);
+void	*routine(void *ph);
+int num_of_ats(t_philo *philo);
+void	data_init(int ac, char **av, t_philo *philo);
 #endif
