@@ -6,7 +6,7 @@
 /*   By: lucifer <lucifer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 04:18:31 by lucifer          ###   ########.fr       */
+/*   Updated: 2022/08/14 05:10:07 by lucifer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ int main(int ac, char **av)
 	philo = malloc(sizeof(t_philo) * atoi(av[1]));
 	if (!philo)
 		return (0);
+	if (ft_atoi(av[1]) == 0 || ft_atoi(av[2]) == 0 || ft_atoi(av[3]) == 0 || ft_atoi(av[4]) == 0)
+	{
+		printf("Argument Error\n");
+		return (0);
+	}
 	data_init(ac, av, philo);
 	while (1)
 	{	

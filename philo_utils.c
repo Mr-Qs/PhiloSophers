@@ -6,11 +6,44 @@
 /*   By: lucifer <lucifer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 04:09:57 by lucifer           #+#    #+#             */
-/*   Updated: 2022/08/14 04:12:34 by lucifer          ###   ########.fr       */
+/*   Updated: 2022/08/14 04:58:14 by lucifer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_atoi(char *str)
+{
+	int i;
+	int	res;
+	int sign;
+
+	sign = 1;
+	i = 0;
+	res = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\r' || str[i] == '\v')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+		res = res * 10 + str[i++] - '0';
+	if (ft_strlen(str + i) > 0)
+		return (0);
+	return (res * sign);
+}
 
 long	get_time(void)
 {

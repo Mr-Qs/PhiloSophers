@@ -6,7 +6,7 @@
 /*   By: lucifer <lucifer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:09:49 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 04:17:32 by lucifer          ###   ########.fr       */
+/*   Updated: 2022/08/14 04:44:23 by lucifer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct s_philo
 	t_data		*data;
 	int			eating;
 }	t_philo;
-
+int	ft_atoi(char *str);
 long	get_time(void);
 int	shinigami(t_philo *philo);
 void	ft_usleep(long time);
