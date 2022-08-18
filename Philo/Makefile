@@ -4,7 +4,7 @@ CC		= gcc -pthread
 
 FLAGS	= -Wall -Werror -Wextra
 
-SRC		= philo.c philo_utils.c
+SRC		= srcs/philo.c srcs/philo_utils.c srcs/philo_data.c
 
 OBJ		= $(SRC:.c=.o)
 

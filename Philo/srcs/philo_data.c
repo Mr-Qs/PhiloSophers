@@ -6,11 +6,11 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:32:56 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 21:39:28 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/16 00:28:27 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	ft_strlen(char *str)
 {
@@ -31,7 +31,7 @@ void	data_init(int ac, char **av, t_philo *philo)
 	data = malloc(sizeof(t_data));
 	mutex_init(data, av);
 	if (ac == 6)
-		data->num_of_eats = atoi(av[5]);
+		data->num_of_eats = ft_atoi(av[5]);
 	while (i < data->num_of_philos)
 	{
 		philo[i].meals = 0;
@@ -54,10 +54,10 @@ void	mutex_init(t_data *data, char **av)
 
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
-	data->num_of_philos = atoi(av[1]);
-	data->time_to_die = atoi(av[2]);
-	data->time_to_eat = atoi(av[3]);
-	data->time_to_sleep = atoi(av[4]);
+	data->num_of_philos = ft_atoi(av[1]);
+	data->time_to_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
 	data->num_of_eats = -1;
 	while (i < ft_atoi(av[1]))
 		pthread_mutex_init(&data->forks[i++], NULL);

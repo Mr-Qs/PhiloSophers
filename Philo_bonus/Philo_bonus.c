@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   Philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 21:33:16 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 21:39:16 by mrobaii          ###   ########.fr       */
+/*   Created: 2022/08/16 01:23:42 by mrobaii           #+#    #+#             */
+/*   Updated: 2022/08/18 23:58:39 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "philo.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 int	ft_atoi(char *str)
 {
@@ -37,44 +48,41 @@ int	ft_atoi(char *str)
 	return (res * sign);
 }
 
-long	get_time(void)
+void	routine(t_philo *philo)
 {
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	
 }
-
-int	shinigami(t_philo *philo)
+void	data_init(t_philo *philo, t_data *data, int ac, char **av)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->data->num_of_philos)
+	data->num_of_philo = ft_atoi(av[1]);
+	data->time_to_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
+	data->num_of_eats = -1;
+	if (ac == 6)
+		data->num_of_eats = ft_atoi(av[5]);
+	philo->data = data;
+}
+int	main(int ac, char **av)
+{
+	t_philo	*philo;
+	t_data *data;
+	int i;
+	int	pid;
+	i =0;
+	philo = malloc(sizeof(t_philo));
+	data = malloc(sizeof(t_data));
+	data_init(philo, data, ac, av);
+	while (i < data->num_of_philo)
 	{
-		if (get_time() - philo[i].last_meal > philo->data->time_to_die)
-		{
-			ft_print("is dead", philo[i].id, philo[i].data->time, &philo[i]);
-			pthread_mutex_lock(&philo->data->lck);
-			return (1);
-		}
+		pid = fork();
+		if (pid == 0){
+			routine(&i);
+		if (pid == 0)
+			break;
 		i++;
 	}
-	return (0);
-}
-
-void	ft_usleep(long time)
-{
-	long	t;
-
-	t = get_time();
-	while (get_time() - t < time)
-		usleep(100);
-}
-
-void	ft_print(char *str, int id, long t, t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->lck);
-	printf("%ld ms %d %s\n", get_time() - t, id, str);
-	pthread_mutex_unlock(&philo->data->lck);
 }

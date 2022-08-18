@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:09:49 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 21:44:09 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/16 02:22:48 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_philo
 	long		last_meal;
 	pthread_t	t;
 	t_data		*data;
-	int			eating;
 }	t_philo;
 int		ft_atoi(char *str);
 long	get_time(void);
@@ -54,4 +53,5 @@ void	ft_sleeping(t_philo *philo, long t);
 void	*routine(void *ph);
 int		num_of_ats(t_philo *philo);
 void	data_init(int ac, char **av, t_philo *philo);
+int		ft_strlen(char *str);
 #endif

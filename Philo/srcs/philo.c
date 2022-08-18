@@ -6,11 +6,11 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/14 21:36:59 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/16 00:28:18 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	ft_eating(t_philo *philo, long t)
 {
@@ -55,8 +55,6 @@ int	num_of_ats(t_philo *philo)
 	i = 0;
 	if (philo->data->num_of_eats == -1)
 		return (0);
-	if (philo->data->num_of_eats == 0)
-		return (1);
 	while (i < philo->data->num_of_philos)
 	{
 		pthread_mutex_lock(&philo->data->meal);
@@ -81,7 +79,12 @@ int	main(int ac, char **av)
 		printf("Argument Error\n");
 		return (0);
 	}
-	philo = malloc(sizeof(t_philo) * atoi(av[1]));
+	if (ac == 6 && ft_atoi(av[5]) == 0)
+	{
+		printf("Argument Error\n");
+		return (0);
+	}
+	philo = malloc(sizeof(t_philo) * ft_atoi(av[1]));
 	if (!philo)
 		return (0);
 	data_init(ac, av, philo);
