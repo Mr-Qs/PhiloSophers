@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:23:42 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/18 23:58:39 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/19 00:33:31 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+long	get_time()
+{
+	struct timeval time;
+	
+	gettimeofday(&time, NULL);
+
+	return(time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_print(char *str, t_philo *philo)
+{
+	printf("%ld %d %s\n", get_time() - philo->time, philo->id, str);
+}
+
+void	ft_eating(t_philo *philo)
+{
+	ft_print("has take a fork", philo);
+	ft_print("has take a fork", philo);
+	ft_print("is eating", philo);
+}
 int	ft_atoi(char *str)
 {
 	int	i;
@@ -50,7 +70,11 @@ int	ft_atoi(char *str)
 
 void	routine(t_philo *philo)
 {
-	
+	philo->time = get_time();
+	while (1)
+	{
+		ft_eating(philo);
+	}
 }
 void	data_init(t_philo *philo, t_data *data, int ac, char **av)
 {
@@ -79,10 +103,14 @@ int	main(int ac, char **av)
 	while (i < data->num_of_philo)
 	{
 		pid = fork();
+		philo->id = i + 1;
 		if (pid == 0){
-			routine(&i);
+			routine(philo);
 		if (pid == 0)
 			break;
 		i++;
 	}
+	sleep(1);
+	exit(0);
+}
 }

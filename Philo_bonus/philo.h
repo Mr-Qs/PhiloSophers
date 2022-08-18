@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:24:11 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/17 15:46:34 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/19 00:08:23 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include<stdlib.h>
 # include<pthread.h>
 #include<semaphore.h>
+#include<sys/time.h>
 
 typedef struct s_data
 {
@@ -34,5 +35,6 @@ typedef struct s_philo
 	long 	last_meal;
 	sem_t	sem;
 	t_data	*data;
+	long	time;
 }	t_philo;
 #endif
