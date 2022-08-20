@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:24:11 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/19 00:08:23 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/20 01:10:09 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_data
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	num_of_eats;
+	sem_t	semaphore;
 }	t_data;
 
 typedef struct s_philo

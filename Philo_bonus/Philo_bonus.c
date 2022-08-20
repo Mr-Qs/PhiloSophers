@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:23:42 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/19 00:33:31 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/20 01:13:04 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int ac, char **av)
 	t_data *data;
 	int i;
 	int	pid;
+	
 	i =0;
 	philo = malloc(sizeof(t_philo));
 	data = malloc(sizeof(t_data));
@@ -110,7 +111,6 @@ int	main(int ac, char **av)
 			break;
 		i++;
 	}
-	sleep(1);
-	exit(0);
+
 }
 }
