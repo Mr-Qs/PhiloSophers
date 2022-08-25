@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:24:11 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/20 01:10:09 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/25 17:38:12 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include<pthread.h>
 #include<semaphore.h>
 #include<sys/time.h>
+#include<signal.h>
 
 typedef struct s_data
 {
@@ -34,8 +35,9 @@ typedef struct s_philo
 {
 	int 	id;
 	long 	last_meal;
-	sem_t	sem;
 	t_data	*data;
 	long	time;
+	pthread_t t;
+	sem_t	*death;
 }	t_philo;
 #endif

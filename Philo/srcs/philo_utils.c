@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:33:16 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/16 00:28:23 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/25 17:27:08 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,5 @@ void	ft_print(char *str, int id, long t, t_philo *philo)
 	printf("%ld ms %d %s\n", get_time() - t, id, str);
 	pthread_mutex_unlock(&philo->data->lck);
 }
+
+

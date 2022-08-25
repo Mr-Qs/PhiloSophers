@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/16 00:28:18 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/25 12:43:00 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	main(int ac, char **av)
 {
 	t_philo	*philo;
 
-	if (ac < 5 || ft_atoi(av[1]) == 0 || ft_atoi(av[2]) == 0
-		|| ft_atoi(av[3]) == 0 || ft_atoi(av[4]) == 0)
+	if (ac < 5 || ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0
+		|| ft_atoi(av[3]) <= 0 || ft_atoi(av[4]) <= 0)
 	{
 		printf("Argument Error\n");
 		return (0);
 	}
-	if (ac == 6 && ft_atoi(av[5]) == 0)
+	if (ac == 6 && ft_atoi(av[5]) <= 0)
 	{
 		printf("Argument Error\n");
 		return (0);
