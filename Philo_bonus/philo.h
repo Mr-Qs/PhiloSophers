@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:24:11 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/25 17:38:12 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/25 18:17:48 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ typedef struct s_philo
 	long	time;
 	pthread_t t;
 	sem_t	*death;
+	sem_t	*sema;
+	sem_t	*print;
 }	t_philo;
 #endif

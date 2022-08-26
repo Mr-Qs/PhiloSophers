@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 22:48:29 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/25 17:43:09 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/08/25 19:08:53 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,19 @@ int	ft_strlen(char *str)
 
 void	ft_print(char *str, t_philo *philo)
 {
+	sem_wait(philo->print);
 	printf("%ld %d %s\n", get_time() - philo->time, philo->id, str);
+	sem_post(philo->print);
 }
 
 void	sumulation(t_philo *philo, sem_t *sema)
 {
 	sem_wait(sema);
-	philo->last_meal = get_time();
 	ft_print("has take a fork", philo);
 	sem_wait(sema);
 	ft_print("has take a fork", philo);
 	ft_print("is eating", philo);
+	philo->last_meal = get_time();
 	ft_usleep(philo->data->time_to_eat);
 	sem_post(sema);
 	sem_post(sema);
@@ -126,6 +128,7 @@ void	*shinigami(void *args)
 		{
 			sem_post(death);
 			ft_print("is dead", philo);
+			exit(0);
 		}
 	}	
 }
@@ -136,17 +139,19 @@ int	main(int ac, char **av)
 	int i;
 	int	id;
 	int *pid;
-	sem_t	*sema;
 	
 	pid = malloc(sizeof(int) * ft_atoi(av[1]));
 	sem_unlink("/SEMA");
 	sem_unlink("/DEATH");
+	sem_unlink("/PRINT");
 	i = 0;
 	philo = malloc(sizeof(t_philo));
 	data = malloc(sizeof(t_data));
 	data_init(philo, data, ac, av);
-	sema = sem_open("/SEMA", O_CREAT, 777, data->num_of_philo);
+	philo->sema = sem_open("/SEMA", O_CREAT, 777, data->num_of_philo);
 	philo->death = sem_open("/DEATH", O_CREAT, 777, 0);
+	philo->print = sem_open("/PRINT", O_CREAT, 777, 1);
+	printf("%p\n", philo);
 	while (i < data->num_of_philo)
 	{
 		philo->id = i + 1;
@@ -155,9 +160,15 @@ int	main(int ac, char **av)
 			pid[i] = id;
 		if (id == 0)
 		{
-			pthread_create(&philo->t, NULL, &shinigami, philo->death);
-			routine(philo, sema);
+			// pthread_create(&philo->t, NULL, &shinigami, philo);
+			// routine(philo, philo->sema);
+			printf("%p\n", philo);
+			philo->id = 100;
+			exit(0);
 		}
+			printf("%p\n", philo);
+			// printf("%d\n", philo->id);
+
 		usleep(90);
 		i++;
 	}
