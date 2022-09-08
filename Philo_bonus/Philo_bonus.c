@@ -6,153 +6,57 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 22:48:29 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/25 19:08:53 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/08 02:27:18 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
 #include "philo.h"
 
-long	get_time()
+void	routine(t_philo *philo, sem_t *forks)
 {
-	struct timeval time;
-	
-	gettimeofday(&time, NULL);
-
-	return(time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-void	ft_usleep(long time)
-{
-	long t;
-
-	t = get_time();
-	while (get_time() - t < time)
-		usleep(100);
-}
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-
-void	ft_print(char *str, t_philo *philo)
-{
-	sem_wait(philo->print);
-	printf("%ld %d %s\n", get_time() - philo->time, philo->id, str);
-	sem_post(philo->print);
-}
-
-void	sumulation(t_philo *philo, sem_t *sema)
-{
-	sem_wait(sema);
-	ft_print("has take a fork", philo);
-	sem_wait(sema);
-	ft_print("has take a fork", philo);
-	ft_print("is eating", philo);
-	philo->last_meal = get_time();
-	ft_usleep(philo->data->time_to_eat);
-	sem_post(sema);
-	sem_post(sema);
-	ft_print("is sleeping", philo);
-	ft_usleep(philo->data->time_to_sleep);
-	ft_print("is thinking", philo);
-}
-
-int	ft_atoi(char *str)
-{
-	int	i;
-	int	res;
-	int	sign;
-
-	sign = 1;
-	i = 0;
-	res = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'
-		|| str[i] == '\r' || str[i] == '\v')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-		res = res * 10 + str[i++] - '0';
-	if (ft_strlen(str + i) > 0)
-		return (0);
-	return (res * sign);
-}
-
-void	routine(t_philo *philo, sem_t *sema)
-{
-	philo->time = get_time(); 
 	while (1)
 	{
-		sumulation(philo, sema);
+		sem_wait(forks);
+		ft_print("has take a fork", philo);
+		sem_wait(forks);
+		ft_print("has take a fork", philo);
+		ft_print("is eating", philo);
+		philo->last_meal = get_time();
+		ft_usleep(philo->data->time_to_eat);
+		philo->meals++;
+		sem_post(forks);
+		sem_post(forks);
+		ft_print("is sleeping", philo);
+		ft_usleep(philo->data->time_to_sleep);
+		ft_print("is thinking", philo);
 	}
-}
-void	data_init(t_philo *philo, t_data *data, int ac, char **av)
-{
-	int	i;
-
-	i = 0;
-	data->num_of_philo = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
-	data->num_of_eats = -1;
-	if (ac == 6)
-		data->num_of_eats = ft_atoi(av[5]);
-	philo->data = data;
-	philo->last_meal = get_time();
 }
 
 void	*shinigami(void *args)
 {
-	sem_t *death;
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	death = philo->death;
 	while (1)
 	{
 		if (get_time() - philo->last_meal >= philo->data->time_to_die)
 		{
-			sem_post(death);
-			ft_print("is dead", philo);
-			exit(0);
+			sem_wait(philo->print);
+			printf("%ld ms %d is dead\n", get_time() - philo->time, philo->id);
+			exit(1);
 		}
+		if (philo->ac == 6 && philo->meals >= philo->data->num_of_eats)
+			exit(0);
 	}	
 }
-int	main(int ac, char **av)
+
+void	creating_philos(t_philo *philo, int *pid)
 {
-	t_philo	*philo;
-	t_data *data;
-	int i;
+	int	i;
 	int	id;
-	int *pid;
-	
-	pid = malloc(sizeof(int) * ft_atoi(av[1]));
-	sem_unlink("/SEMA");
-	sem_unlink("/DEATH");
-	sem_unlink("/PRINT");
+
 	i = 0;
-	philo = malloc(sizeof(t_philo));
-	data = malloc(sizeof(t_data));
-	data_init(philo, data, ac, av);
-	philo->sema = sem_open("/SEMA", O_CREAT, 777, data->num_of_philo);
-	philo->death = sem_open("/DEATH", O_CREAT, 777, 0);
-	philo->print = sem_open("/PRINT", O_CREAT, 777, 1);
-	printf("%p\n", philo);
-	while (i < data->num_of_philo)
+	while (i < philo->data->num_of_philo)
 	{
 		philo->id = i + 1;
 		id = fork();
@@ -160,21 +64,32 @@ int	main(int ac, char **av)
 			pid[i] = id;
 		if (id == 0)
 		{
-			// pthread_create(&philo->t, NULL, &shinigami, philo);
-			// routine(philo, philo->sema);
-			printf("%p\n", philo);
-			philo->id = 100;
-			exit(0);
+			pthread_create(&philo->t, NULL, &shinigami, philo);
+			routine(philo, philo->forks);
 		}
-			printf("%p\n", philo);
-			// printf("%d\n", philo->id);
-
-		usleep(90);
 		i++;
 	}
-	sem_wait(philo->death);
-	i = 0;
-	while (i < philo->data->num_of_philo)
-		kill(pid[i++], SIGKILL);
-	waitpid(0, &i, WNOHANG);
+}
+
+int	main(int ac, char **av)
+{
+	t_philo	*philo;
+	t_data	*data;
+	int		*pid;
+	int		catch;
+
+	pid = malloc(sizeof(int) * ft_atoi(av[1]));
+	philo = malloc(sizeof(t_philo));
+	data = malloc(sizeof(t_data));
+	sem_unlink("/FORKS");
+	sem_unlink("/PRINT");
+	data_init(philo, data, ac, av);
+	philo->forks = sem_open("/FORKS", O_CREAT, 777, data->num_of_philo);
+	philo->print = sem_open("/PRINT", O_CREAT, 777, 1);
+	creating_philos(philo, pid);
+	while (waitpid(-1, &catch, 0) != -1)
+	{
+		if (catch == 256)
+			killprocess(data->num_of_philo, pid);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/25 12:43:00 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/06 01:51:57 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ void	*routine(void *ph)
 	t_philo	*philo;
 
 	philo = (t_philo *)ph;
-	philo->data->time = get_time();
+	philo->time = get_time();
+	philo->last_meal = get_time();
 	while (1)
 	{
-		ft_eating(philo, philo->data->time);
-		ft_sleeping(philo, philo->data->time);
-		ft_print("is thinking", philo->id, philo->data->time, philo);
+		ft_eating(philo, philo->time);
+		ft_sleeping(philo, philo->time);
+		ft_print("is thinking", philo->id, philo->time, philo);
 	}
 }
 

@@ -1,16 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   Philo_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 21:33:16 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/06 01:27:12 by mrobaii          ###   ########.fr       */
+/*   Created: 2022/09/08 02:04:51 by mrobaii           #+#    #+#             */
+/*   Updated: 2022/09/08 02:33:23 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
+
+long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_usleep(long time)
+{
+	long	t;
+
+	t = get_time();
+	while (get_time() - t < time)
+		usleep(100);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+void	ft_print(char *str, t_philo *philo)
+{
+	sem_wait(philo->print);
+	printf("%ld %d %s\n", get_time() - philo->time, philo->id, str);
+	sem_post(philo->print);
+}
 
 int	ft_atoi(char *str)
 {
@@ -37,44 +71,7 @@ int	ft_atoi(char *str)
 	return (res * sign);
 }
 
-long	get_time(void)
+void	ft_checker(int ac, char **av)
 {
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int	shinigami(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->data->num_of_philos)
-	{
-		if (get_time() - philo[i].last_meal >= philo->data->time_to_die)
-		{
-			ft_print("is dead", philo[i].id, philo[i].time, &philo[i]);
-			pthread_mutex_lock(&philo->data->lck);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-void	ft_usleep(long time)
-{
-	long	t;
-
-	t = get_time();
-	while (get_time() - t < time)
-		usleep(100);
-}
-
-void	ft_print(char *str, int id, long t, t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->lck);
-	printf("%ld ms %d %s\n", get_time() - t, id, str);
-	pthread_mutex_unlock(&philo->data->lck);
+	if ()
 }

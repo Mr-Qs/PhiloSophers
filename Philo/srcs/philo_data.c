@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:32:56 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/08/16 00:28:27 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/06 01:51:23 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	data_init(int ac, char **av, t_philo *philo)
 		philo[i].id = i + 1;
 		philo[i].left_fork = i;
 		philo[i].right_fork = i + 1;
-		philo[i].last_meal = get_time();
 		if (i == data->num_of_philos - 1)
 			philo[i].right_fork = 0;
 		pthread_create(&philo[i].t, NULL, &routine, &philo[i]);
-		usleep(50);
+		usleep(70);
 		i++;
 	}
 }
