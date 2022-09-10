@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:18:25 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/06 01:51:57 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:16:07 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	ft_eating(t_philo *philo, long t)
 	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
 	ft_print("has take a fork", philo->id, t, philo);
 	ft_print("is eating", philo->id, t, philo);
+	pthread_mutex_lock(&philo->data->last_meal);
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->data->last_meal);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_lock(&philo->data->meal);
 	philo->meals++;

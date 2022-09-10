@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 02:04:51 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/08 02:33:23 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/08 03:31:06 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,4 @@ int	ft_atoi(char *str)
 	if (ft_strlen(str + i) > 0)
 		return (0);
 	return (res * sign);
-}
-
-void	ft_checker(int ac, char **av)
-{
-	if ()
 }

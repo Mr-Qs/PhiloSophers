@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 22:48:29 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/08 02:27:18 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/08 03:32:30 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	main(int ac, char **av)
 	int		*pid;
 	int		catch;
 
+	if (!checker(ac, av))
+		return (0);
 	pid = malloc(sizeof(int) * ft_atoi(av[1]));
 	philo = malloc(sizeof(t_philo));
 	data = malloc(sizeof(t_data));
@@ -92,4 +94,5 @@ int	main(int ac, char **av)
 		if (catch == 256)
 			killprocess(data->num_of_philo, pid);
 	}
+	return (0);
 }

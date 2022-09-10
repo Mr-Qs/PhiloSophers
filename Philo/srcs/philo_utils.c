@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:33:16 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/06 01:27:12 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:17:42 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ int	shinigami(t_philo *philo)
 	i = 0;
 	while (i < philo->data->num_of_philos)
 	{
+		pthread_mutex_lock(&philo[i].data->last_meal);
 		if (get_time() - philo[i].last_meal >= philo->data->time_to_die)
 		{
 			ft_print("is dead", philo[i].id, philo[i].time, &philo[i]);
 			pthread_mutex_lock(&philo->data->lck);
 			return (1);
 		}
+		pthread_mutex_unlock(&philo[i].data->last_meal);
 		i++;
 	}
 	return (0);

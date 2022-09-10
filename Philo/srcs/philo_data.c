@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:32:56 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/06 01:51:23 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:14:57 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void	mutex_init(t_data *data, char **av)
 		pthread_mutex_init(&data->forks[i++], NULL);
 	pthread_mutex_init(&data->lck, NULL);
 	pthread_mutex_init(&data->meal, NULL);
+	pthread_mutex_init(&data->last_meal, NULL);
 }

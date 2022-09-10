@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 01:24:11 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/08 02:32:08 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/08 03:29:22 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ void	sumulation(t_philo *philo, sem_t *forks);
 void	data_init(t_philo *philo, t_data *data, int ac, char **av);
 void	*shinigami(void *args);
 void	killprocess(int num_of_philo, int *pid);
+int		checker(int ac, char **av);
 #endif

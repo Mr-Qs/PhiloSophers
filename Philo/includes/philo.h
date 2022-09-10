@@ -6,7 +6,7 @@
 /*   By: mrobaii <mrobaii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 01:09:49 by mrobaii           #+#    #+#             */
-/*   Updated: 2022/09/06 02:25:16 by mrobaii          ###   ########.fr       */
+/*   Updated: 2022/09/10 19:14:27 by mrobaii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lck;
 	pthread_mutex_t	meal;
+	pthread_mutex_t	last_meal;
 }	t_data;
 
 typedef struct s_philo
